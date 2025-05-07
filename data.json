@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Abrams",
+        "jobId": "1",
+        "jobs": [
+            {
+                "title": "Picker",
+                "status": "Active"
+            },
+            {
+                "title": "Java Developer",
+                "status": "Closed"
+            }
+        ]
+    }
+]
