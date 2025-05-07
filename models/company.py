@@ -23,7 +23,7 @@ class Company:
     def from_dict(data):
         company = Company(data["name"], data.get("jobId"))
         for job_data in data.get("jobs", []):
-            company.adicionar_job(Job.from_dict(job_data))
+            company.addJob(Job.from_dict(job_data))
         return company
     
     def __str__(self):
