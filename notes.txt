@@ -1,0 +1,7 @@
+Initial page
+
+- Select company you want to see more info
+- Overview of the general candidates in each stage among all the companies and jobs
+    - these info should be counting candidates in a stage as the floating percentage
+      and the static percentage (100%) should be the sum of all openings in all jobs available
+

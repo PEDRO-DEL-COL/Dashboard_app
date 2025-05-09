@@ -18,40 +18,31 @@ def loadCompanies():
             return [Company.from_dict(comp) for comp in data]
     except FileNotFoundError:
         return []
-    
-class RegisterCompanyFrame(tk.Frame):
-    def __init__(self, parent, controller):
-        super().__init__(parent)
-        self.controller = controller
-        self.companies = loadCompanies()
 
-        tk.Label(self, text="Company's Name").pack()
+class RegisterCompanyPopup(tk.Toplevel):
+    def __init__(self, master, on_register_callback):
+        super().__init__(master)
+        self.title("Register Company")
+        self.on_register_callback = on_register_callback
+
+        tk.Label(self, text="Company Name").pack(pady=5)
         self.entry_name = tk.Entry(self, width=40)
-        self.entry_name.pack()
+        self.entry_name.pack(pady=5)
 
-        tk.Label(self, text="Job ID").pack()
+        tk.Label(self, text="Job ID").pack(pady=5)
         self.entry_jobId = tk.Entry(self, width=40)
-        self.entry_jobId.pack()
+        self.entry_jobId.pack(pady=5)
 
-        btn_register = tk.Button(self, text="Register", command=self.registerCompany)
-        btn_register.pack(pady=10)
+        tk.Button(self, text="Register", command=self.registerCompany).pack(pady=10)
 
-        self.listbox_companies =tk.Listbox(self, width=50)
-        self.listbox_companies.pack()
-
-        self.updateList()
 
     def registerCompany(self):
         name = self.entry_name.get()
         jobId = self.entry_jobId.get()
 
         if name and jobId:
-            new_company = Company(name, jobId)
-            self.companies.append(new_company)
-            saveCompanies(self.companies)
-            self.updateList()
-            self.entry_name.delete(0, tk.END)
-            self.entry_jobId.delete(0, tk.END)
+            self.on_register_callback(name, jobId)
+            self.destroy()
         else:
             messagebox.showwarning("Warning!", "Please fill all the blank spaces.")
 
@@ -60,7 +51,7 @@ class RegisterCompanyFrame(tk.Frame):
         for company in self.companies:
             self.listbox_companies.insert(tk.END, f"{company.name} (Job ID: {company.jobId})")
 
-class RegisterJobFrame(tk.Frame):
+class RegisterJobPopup(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
@@ -141,22 +132,64 @@ class App(tk.Tk):
         super().__init__()
         self.title("Dashboard")
         self.geometry("1200x800")
+        self.companies = loadCompanies()
 
         # Nav bar
         self.navbar = tk.Frame(self, bg="lightgray")
         self.navbar.pack(fill="x", side="top")
 
         # Main container
-        self.container = tk.Frame(self, bg="lightgray")
+        '''self.container = tk.Frame(self, bg="lightgray")
         self.container.pack(fill="both", expand=True)
         self.container.grid_rowconfigure(0, weight=1)
-        self.container.grid_columnconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)'''
 
         # Nav buttons
         tk.Button(self.navbar, text="Register Company", command=self.show_register_company).pack(side="left")
         tk.Button(self.navbar, text="Register Job", command=self.show_register_job).pack(side="left")
 
-        # Content frames
+        # List of companies
+        self.label = tk.Label(self, text="Registered Companies")
+        self.label.pack(pady=(20, 5))
+
+        self.companyListbox = tk.Listbox(self, width=50)
+        self.companyListbox.pack(pady=10)
+
+        self.updateCompanyList()
+
+
+    def show_register_company(self):
+        RegisterCompanyPopup(self, self.add_company_to_list)
+
+
+    def add_company_to_list(self, name, jobId):
+        newCompany = Company(name, jobId)
+        self.companies.append(newCompany)
+        saveCompanies(self.companies)
+        self.updateCompanyList()
+
+
+    def show_register_job(self):
+        popup = tk.Toplevel(self)
+        popup.title("Register Job")
+        RegisterJobPopup(popup, self).pack(fill="both", expand=True)
+
+    # Function to update the lsit of companies in the main screen
+    def updateCompanyList(self):
+        self.companies = loadCompanies()
+        self.companyListbox.delete(0, tk.END)
+        for company in self.companies:
+            self.companyListbox.insert(tk.END, f"{company.name} (Job ID: {company.jobId})")
+
+    
+    def openRegisterCompanyPopup(self):
+        RegisterCompanyPopup(self)
+
+
+    def openRegisterJobPopup(self):
+        RegisterJobPopup(self)
+    
+    '''# Content frames
         self.frames = {}
         for F in (RegisterCompanyFrame, RegisterJobFrame):
             frame = F(self.container, self)
@@ -169,7 +202,7 @@ class App(tk.Tk):
         self.frames[RegisterCompanyFrame].tkraise()
 
     def show_register_job(self):
-        self.frames[RegisterJobFrame].tkraise()
+        self.frames[RegisterJobFrame].tkraise()'''
 
 
 if __name__ == "__main__":
