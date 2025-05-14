@@ -15,10 +15,3 @@ def loadCompanies():
             return [Company.from_dict(comp) for comp in data]
     except FileNotFoundError:
         return []
-    
-def generateUniqueId(self):
-        existingIds = [company.companyId for company in loadCompanies()]
-        while True:
-            newId = f"COMP{random.randint(1000000, 9999999)}"
-            if newId not in existingIds:
-                return newId

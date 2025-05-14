@@ -1,43 +1,17 @@
 [
     {
         "name": "Abrams",
-        "jobId": "1",
+        "companyId": "COMP9915657",
         "jobs": [
             {
-                "title": "Picker",
-                "status": "Active"
-            },
-            {
-                "title": "Java Developer",
-                "status": "Closed"
-            },
-            {
-                "title": "No-Fault Claims Adjuster",
-                "status": "Open"
-            }
-        ]
-    },
-    {
-        "name": "Refresco",
-        "jobId": "2",
-        "jobs": []
-    },
-    {
-        "name": "Fragomen",
-        "jobId": "3",
-        "jobs": []
-    },
-    {
-        "name": "Clio",
-        "jobId": "4",
-        "jobs": [
-            {
-                "title": "Warehouse Associate 2nd shift - payroll",
-                "status": "Open"
-            },
-            {
-                "title": "Packaging Associates - Payroll",
-                "status": "On hold"
+                "title": "No-Fault Claim Adjuster",
+                "status": "Open",
+                "candidates": [
+                    {
+                        "name": "Charles Clarke",
+                        "status": "Submitted"
+                    }
+                ]
             }
         ]
     }

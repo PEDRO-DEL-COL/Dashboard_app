@@ -6,7 +6,7 @@ class DeleteJobPopup(tk.Toplevel):
     def __init__(self, master, companies, on_delete_callback):
         super().__init__(master)
         self.title("Delete Job")
-        self.geometry("400x400")
+        self.geometry("800x600")
         self.companies = companies
         self.on_delete_callback = on_delete_callback
         self.selected_company_index = None
@@ -27,7 +27,7 @@ class DeleteJobPopup(tk.Toplevel):
     def update_company_list(self):
         self.company_listbox.delete(0, tk.END)
         for company in self.companies:
-            self.company_listbox.insert(tk.END, f"{company.name} (Job ID: {company.jobId})")
+            self.company_listbox.insert(tk.END, f"{company.name} (Job ID: {company.companyId})")
 
     def show_jobs(self, event=None):
         selection = self.company_listbox.curselection()

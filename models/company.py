@@ -29,3 +29,4 @@ class Company:
     
     def __str__(self):
         return f"{self.name} [{self.companyId}] ({len(self.jobs)} jobs)"
+        

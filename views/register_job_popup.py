@@ -27,7 +27,7 @@ class RegisterJobPopup(tk.Frame):
     def updateCompanyList(self):
         self.companyListbox.delete(0, tk.END)
         for company in self.companies:
-            self.companyListbox.insert(tk.END, f"{company.name} (Job ID: {company.jobId})")
+            self.companyListbox.insert(tk.END, f"{company.name} (Job ID: {company.companyId})")
 
     def showCompanyJobs(self, event):
         selection = self.companyListbox.curselection()

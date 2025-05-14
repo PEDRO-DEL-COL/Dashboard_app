@@ -1,6 +1,8 @@
 import tkinter as tk
+import random
 from tkinter import messagebox
-from utils.persistence import generateUniqueId
+from utils.persistence import loadCompanies
+from models.company import Company
 
 class RegisterCompanyPopup(tk.Toplevel):
     def __init__(self, master, on_register_callback):
@@ -19,7 +21,8 @@ class RegisterCompanyPopup(tk.Toplevel):
         name = self.entry_name.get()
 
         if name:
-            companyId = generateUniqueId()
+            companyId = self.generateUniqueId()
+            company = Company(name="", companyId="")
             self.on_register_callback(name, companyId)
             self.destroy()
         else:
@@ -29,3 +32,10 @@ class RegisterCompanyPopup(tk.Toplevel):
         self.listbox_companies.delete(0, tk.END)
         for company in self.companies:
             self.listbox_companies.insert(tk.END, f"{company.name} (Job ID: {company.jobId})")
+
+    def generateUniqueId(self):
+        existingIds = [company.companyId for company in loadCompanies()]
+        while True:
+            newId = f"COMP{random.randint(1000000, 9999999)}"
+            if newId not in existingIds:
+                return newId
