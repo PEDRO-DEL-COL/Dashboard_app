@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from utils.persistence import loadCompanies, saveCompanies
+from utils.persistence import loadCompanies, saveAll, updateAll
 from models.job import Job
 
 class RegisterJobPopup(tk.Frame):
@@ -63,13 +63,25 @@ class RegisterJobPopup(tk.Frame):
         dropdown_status = tk.OptionMenu(popup, status_var, *options)
         dropdown_status.pack()
 
+        # Campo para coverage (somente números)
+        tk.Label(popup, text="Coverage (only numbers)").pack()
+
+        def validate_number(value):
+            return value.isdigit() or value == ""
+
+        vcmd = (popup.register(validate_number), "%P")
+        entry_coverage = tk.Entry(popup, width=40, validate="key", validatecommand=vcmd)
+        entry_coverage.pack()
+
         def addJob():
             title = entry_title.get()
             status = status_var.get()
-            if title and status:
-                new_job = Job(title, status)
+            coverage = entry_coverage.get()
+
+            if title and status and coverage:
+                new_job = Job(title, status, int(coverage))
                 company.jobs.append(new_job)
-                saveCompanies(self.companies)
+                saveAll(self.companies)
                 self.selected_company_index = None  # força a atualização da lista
                 self.showCompanyJobs(None)
                 popup.destroy()

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from utils.persistence import loadCompanies, saveCompanies
+from utils.persistence import loadCompanies, saveAll, updateAll
 from models.candidate import Candidate
 
 class RegisterCandidatePopup(tk.Frame):
@@ -74,8 +74,8 @@ class RegisterCandidatePopup(tk.Frame):
 
         tk.Label(popup, text="Status").pack()
         status_var = tk.StringVar(popup)
-        status_var.set("Applied")
-        options = ["Submitted", "Interviewing","Offer Extended", "Hired", "Rejected"]
+        status_var.set("Undefined")
+        options = ["Submitted", "Interview Scheduling","Interview Scheduled","Interview Completed", "Offer Extended", "Offer Accepted", "Started", "Rejected"]
         dropdown_status = tk.OptionMenu(popup, status_var, *options)
         dropdown_status.pack()
 
@@ -85,7 +85,7 @@ class RegisterCandidatePopup(tk.Frame):
             if name and status:
                 candidate = Candidate(name, status)
                 job.addCandidate(candidate)
-                saveCompanies(self.companies)
+                saveAll(self.companies)
                 self.showJobCandidates(None)
                 popup.destroy()
             else:

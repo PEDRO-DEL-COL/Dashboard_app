@@ -6,10 +6,64 @@
             {
                 "title": "No-Fault Claim Adjuster",
                 "status": "Open",
+                "coverage": 3,
                 "candidates": [
                     {
                         "name": "Charles Clarke",
                         "status": "Submitted"
+                    }
+                ]
+            },
+            {
+                "title": "Client Services Associate",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": [
+                    {
+                        "name": "Kaitlyn Nin",
+                        "status": "Interview Completed"
+                    },
+                    {
+                        "name": "Crystal Steitz",
+                        "status": "Interview Scheduled"
+                    },
+                    {
+                        "name": "Mackenzie Warren",
+                        "status": "Interview Scheduled"
+                    }
+                ]
+            },
+            {
+                "title": "Matrimonial Attorney",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            }
+        ]
+    },
+    {
+        "name": "Refresco",
+        "companyId": "COMP3134995",
+        "jobs": [
+            {
+                "title": "PLC Technician",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": [
+                    {
+                        "name": "Abdelrahman Mohammed",
+                        "status": "Interview Scheduled"
+                    }
+                ]
+            },
+            {
+                "title": "Maintenance Mechanics 3rd Shift",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": [
+                    {
+                        "name": "Alan Jeffers",
+                        "status": "Offer Accepted"
                     }
                 ]
             }
