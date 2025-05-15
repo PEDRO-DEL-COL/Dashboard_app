@@ -13,21 +13,17 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Dashboard")
+
         self.geometry("1600x800")
+
         self.companies = loadCompanies()
 
-        # Nav bar
-        self.navbar = tk.Frame(self, bg="lightgray")
+        # Nav bar (vazia por enquanto)
+        self.navbar = tk.Frame(self, bg="gray")
         self.navbar.pack(fill="x", side="top")
 
-        # Nav buttons
-        tk.Button(self.navbar, text="Register Company", command=self.show_register_company).pack(side="left", padx=5)
-        tk.Button(self.navbar, text="Register Job", command=self.show_register_job).pack(side="left", padx=5)
-        tk.Button(self.navbar, text="Delete Job", command=self.show_delete_job).pack(side="left", padx=5)
-        tk.Button(self.navbar, text="Register Candidate", command=self.show_register_candidate).pack(side="left", padx=5)  # ✅ Novo botão
-
-        # Container para as 3 listas lado a lado
-        list_frame = tk.Frame(self, bg="lightgray")
+        # Container principal
+        list_frame = tk.Frame(self)
         list_frame.pack(fill="both", expand=True, pady=20)
 
         self.graph_frame = tk.Frame(self)
@@ -39,6 +35,11 @@ class App(tk.Tk):
         tk.Label(company_frame, text="Registered Companies").pack()
         self.companyListbox = tk.Listbox(company_frame, width=40)
         self.companyListbox.pack(pady=10)
+        company_buttons = tk.Frame(company_frame)
+        company_buttons.pack()
+        tk.Button(company_buttons, text="Register", command=self.show_register_company).pack(side="left", padx=5)
+        tk.Button(company_buttons, text="Edit", command=self.edit_company).pack(side="left", padx=5)
+        tk.Button(company_buttons, text="Delete", command=self.delete_company).pack(side="left", padx=5)
 
         # Job List
         job_frame = tk.Frame(list_frame)
@@ -46,6 +47,11 @@ class App(tk.Tk):
         tk.Label(job_frame, text="Registered Jobs").pack()
         self.jobListbox = tk.Listbox(job_frame, width=70)
         self.jobListbox.pack(pady=10)
+        job_buttons = tk.Frame(job_frame)
+        job_buttons.pack()
+        tk.Button(job_buttons, text="Register", command=self.show_register_job).pack(side="left", padx=5)
+        tk.Button(job_buttons, text="Edit", command=self.edit_job).pack(side="left", padx=5)
+        tk.Button(job_buttons, text="Delete", command=self.delete_job).pack(side="left", padx=5)
 
         # Candidate List
         candidate_frame = tk.Frame(list_frame)
@@ -53,8 +59,13 @@ class App(tk.Tk):
         tk.Label(candidate_frame, text="Registered Candidates").pack()
         self.candidateListbox = tk.Listbox(candidate_frame, width=100)
         self.candidateListbox.pack(pady=10)
+        candidate_buttons = tk.Frame(candidate_frame)
+        candidate_buttons.pack()
+        tk.Button(candidate_buttons, text="Register", command=self.show_register_candidate).pack(side="left", padx=5)
+        tk.Button(candidate_buttons, text="Edit", command=self.edit_candidate).pack(side="left", padx=5)
+        tk.Button(candidate_buttons, text="Delete", command=self.delete_candidate).pack(side="left", padx=5)
 
-        # Call the update methods initially
+        # Inicializar
         self.save_and_update()
 
     def show_delete_job(self):
@@ -69,8 +80,6 @@ class App(tk.Tk):
             widget.destroy()
 
         renderFillProgressChart(self.graph_frame, self.companies)
-
-
 
     def add_company_to_list(self, name, companyId):
         newCompany = Company(name, companyId)
@@ -90,3 +99,22 @@ class App(tk.Tk):
         popup = tk.Toplevel(self)
         popup.title("Register Candidate")
         RegisterCandidatePopup(popup, self).pack(fill="both", expand=True)
+
+    # Placeholders para editar e deletar (próximos passos)
+    def edit_company(self):
+        print("Edit company clicked")
+
+    def delete_company(self):
+        print("Delete company clicked")
+
+    def edit_job(self):
+        print("Edit job clicked")
+
+    def delete_job(self):
+        print("Delete job clicked")
+
+    def edit_candidate(self):
+        print("Edit candidate clicked")
+
+    def delete_candidate(self):
+        print("Delete candidate clicked")
