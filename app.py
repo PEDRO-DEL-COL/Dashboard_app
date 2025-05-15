@@ -5,6 +5,8 @@ from views.register_candidate_popup import RegisterCandidatePopup
 from utils.persistence import loadCompanies, saveAll, updateAll
 from models.company import Company
 from views.delete_job_popup import DeleteJobPopup
+from utils.analytics import renderFillProgressChart
+
 
 class App(tk.Tk):
 
@@ -28,18 +30,21 @@ class App(tk.Tk):
         list_frame = tk.Frame(self, bg="lightgray")
         list_frame.pack(fill="both", expand=True, pady=20)
 
+        self.graph_frame = tk.Frame(self)
+        self.graph_frame.pack(fill="both", expand=False, pady=10)
+
         # Company List
         company_frame = tk.Frame(list_frame)
         company_frame.pack(side="left", fill="both", expand=True)
         tk.Label(company_frame, text="Registered Companies").pack()
-        self.companyListbox = tk.Listbox(company_frame, width=60)
+        self.companyListbox = tk.Listbox(company_frame, width=40)
         self.companyListbox.pack(pady=10)
 
         # Job List
         job_frame = tk.Frame(list_frame)
         job_frame.pack(side="left", fill="both", expand=True)
         tk.Label(job_frame, text="Registered Jobs").pack()
-        self.jobListbox = tk.Listbox(job_frame, width=80)
+        self.jobListbox = tk.Listbox(job_frame, width=70)
         self.jobListbox.pack(pady=10)
 
         # Candidate List
@@ -59,6 +64,12 @@ class App(tk.Tk):
     def save_and_update(self):
         saveAll(self.companies)
         updateAll(self.companyListbox, self.jobListbox, self.candidateListbox, self.companies)
+
+        for widget in self.graph_frame.winfo_children():
+            widget.destroy()
+
+        renderFillProgressChart(self.graph_frame, self.companies)
+
 
 
     def add_company_to_list(self, name, companyId):
