@@ -75,7 +75,7 @@ class RegisterCandidatePopup(tk.Frame):
         tk.Label(popup, text="Status").pack()
         status_var = tk.StringVar(popup)
         status_var.set("Applied")
-        options = ["Submitted", "Interviewing","Offer Extended", "Hired", "Rejected"]
+        options = ["Submitted", "Interviewing", "Offer Extended", "Hired", "Rejected"]
         dropdown_status = tk.OptionMenu(popup, status_var, *options)
         dropdown_status.pack()
 
