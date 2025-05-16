@@ -6,6 +6,11 @@ from utils.persistence import loadCompanies, saveAll, updateAll
 from models.company import Company
 from views.delete_job_popup import DeleteJobPopup
 from utils.analytics import renderFillProgressChart
+from views.delete_company_popup import DeleteCompanyPopup
+from views.delete_candidate_popup import DeleteCandidatePopup
+from views.edit_company_popup import EditCompanyPopup
+from views.edit_job_popup import EditJobPopup
+
 
 
 class App(tk.Tk):
@@ -49,7 +54,7 @@ class App(tk.Tk):
         job_buttons.pack()
         tk.Button(job_buttons, text="Register", command=self.show_register_job).pack(side="left", padx=5)
         tk.Button(job_buttons, text="Edit", command=self.edit_job).pack(side="left", padx=5)
-        tk.Button(job_buttons, text="Delete", command=self.delete_job).pack(side="left", padx=5)
+        tk.Button(job_buttons, text="Delete", command=self.show_delete_job).pack(side="left", padx=5)
 
         # Candidate List
         candidate_frame = tk.Frame(list_frame)
@@ -65,10 +70,6 @@ class App(tk.Tk):
 
         # Inicializar
         self.save_and_update()
-
-    def show_delete_job(self):
-        self.companies = loadCompanies()
-        DeleteJobPopup(self, self.companies, self.save_and_update)
 
     def save_and_update(self):
         saveAll(self.companies)
@@ -100,19 +101,24 @@ class App(tk.Tk):
 
     # Placeholders para editar e deletar (próximos passos)
     def edit_company(self):
-        print("Edit company clicked")
+        EditCompanyPopup(self, self.companies, self.save_and_update)
 
     def delete_company(self):
-        print("Delete company clicked")
+        popup = tk.Toplevel(self)
+        popup.title("Delete Company")
+        DeleteCompanyPopup(popup, self.companies, self.save_and_update).pack(fill="both", expand=True)
 
     def edit_job(self):
-        print("Edit job clicked")
+        EditJobPopup(self, self.jobs, self.save_and_update)
 
-    def delete_job(self):
-        print("Delete job clicked")
+    def show_delete_job(self):
+        self.companies = loadCompanies()
+        DeleteJobPopup(self, self.companies, self.save_and_update)
 
     def edit_candidate(self):
         print("Edit candidate clicked")
 
     def delete_candidate(self):
-        print("Delete candidate clicked")
+        DeleteCandidatePopup(self, self.companies, self.save_and_update)
+
+
