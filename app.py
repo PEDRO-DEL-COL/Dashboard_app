@@ -10,6 +10,7 @@ from views.delete_company_popup import DeleteCompanyPopup
 from views.delete_candidate_popup import DeleteCandidatePopup
 from views.edit_company_popup import EditCompanyPopup
 from views.edit_job_popup import EditJobPopup
+from views.edit_candidate_popup import EditCandidatePopup
 
 
 
@@ -111,14 +112,14 @@ class App(tk.Tk):
         DeleteCompanyPopup(popup, self.companies, self.save_and_update).pack(fill="both", expand=True)
 
     def edit_job(self):
-        EditJobPopup(self, self.jobs, self.save_and_update)
+        EditJobPopup(self, self.companies, self.save_and_update)
 
     def show_delete_job(self):
         self.companies = loadCompanies()
         DeleteJobPopup(self, self.companies, self.save_and_update)
 
     def edit_candidate(self):
-        print("Edit candidate clicked")
+        EditCandidatePopup(self, self.companies, self.save_and_update)
 
     def delete_candidate(self):
         DeleteCandidatePopup(self, self.companies, self.save_and_update)

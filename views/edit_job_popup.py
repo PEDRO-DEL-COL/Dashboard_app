@@ -2,63 +2,111 @@ import tkinter as tk
 from tkinter import messagebox
 
 class EditJobPopup(tk.Toplevel):
-    def __init__(self, master, jobs, on_edit_callback):
+    def __init__(self, master, companies, on_edit_callback):
         super().__init__(master)
         self.title("Edit Job")
-        self.geometry("400x350")
-        self.jobs = jobs
+        self.geometry("800x600")
+        self.companies = companies
         self.on_edit_callback = on_edit_callback
-        self.selected_index = None
+        self.selected_company_index = None
+        self.selected_job_index = None
 
-        tk.Label(self, text="Select a job").pack(pady=5)
-        self.listbox = tk.Listbox(self, width=50)
-        self.listbox.pack(pady=5)
-        self.listbox.bind("<<ListboxSelect>>", self.on_select)
+        # Company selection
+        tk.Label(self, text="Select a company").pack()
+        self.company_listbox = tk.Listbox(self, width=50)
+        self.company_listbox.pack()
+        self.company_listbox.bind("<<ListboxSelect>>", self.show_jobs)
 
-        tk.Label(self, text="New title").pack(pady=5)
-        self.entry_title = tk.Entry(self, width=40)
-        self.entry_title.pack(pady=5)
+        # Job selection
+        tk.Label(self, text="Select a job to edit").pack()
+        self.job_listbox = tk.Listbox(self, width=50)
+        self.job_listbox.pack()
+        self.job_listbox.bind("<<ListboxSelect>>", self.show_job_details)
 
-        tk.Label(self, text="New coverage").pack(pady=5)
-        self.entry_coverage = tk.Entry(self, width=40)
-        self.entry_coverage.pack(pady=5)
+        # Job Title
+        tk.Label(self, text="Title").pack()
+        self.title_entry = tk.Entry(self, width=50)
+        self.title_entry.pack()
 
-        tk.Button(self, text="Save Changes", command=self.edit_job).pack(pady=10)
+        # Job Status (Option Menu)
+        tk.Label(self, text="Status").pack()
+        self.status_var = tk.StringVar()
+        self.status_var.set("Open")
+        self.status_menu = tk.OptionMenu(self, self.status_var, "Open", "On hold", "Closed")
+        self.status_menu.pack()
 
-        self.update_job_list()
+        # Coverage
+        tk.Label(self, text="Coverage (%)").pack()
+        self.coverage_entry = tk.Entry(self, width=50)
+        self.coverage_entry.pack()
 
-    def update_job_list(self):
-        self.listbox.delete(0, tk.END)
-        for job in self.jobs:
-            self.listbox.insert(tk.END, f"{job.title}")
+        # Save Button
+        tk.Button(self, text="Save Changes", command=self.save_job_changes).pack(pady=10)
 
-    def on_select(self, event):
-        selection = self.listbox.curselection()
+        self.update_company_list()
+
+    def update_company_list(self):
+        self.company_listbox.delete(0, tk.END)
+        for company in self.companies:
+            self.company_listbox.insert(tk.END, f"{company.name} ({company.companyId})")
+
+    def show_jobs(self, event=None):
+        selection = self.company_listbox.curselection()
         if selection:
-            self.selected_index = selection[0]
-            selected_job = self.jobs[self.selected_index]
-            self.entry_title.delete(0, tk.END)
-            self.entry_title.insert(0, selected_job.title)
-            self.entry_coverage.delete(0, tk.END)
-            self.entry_coverage.insert(0, selected_job.coverage)
-
-    def edit_job(self):
-        if self.selected_index is None:
-            messagebox.showwarning("Warning", "Please select a job.")
+            self.selected_company_index = selection[0]
+        else:
             return
 
-        new_title = self.entry_title.get().strip()
-        new_coverage = self.entry_coverage.get().strip()
+        self.job_listbox.delete(0, tk.END)
+        company = self.companies[self.selected_company_index]
+        for job in company.jobs:
+            self.job_listbox.insert(tk.END, f"{job.title} - {job.status}")
 
-        if not new_title:
-            messagebox.showwarning("Warning", "Job title cannot be empty.")
-            return
-        if not new_coverage:
-            messagebox.showwarning("Warning", "Coverage cannot be empty.")
+    def show_job_details(self, event=None):
+        if self.selected_company_index is None:
             return
 
-        self.jobs[self.selected_index].title = new_title
-        self.jobs[self.selected_index].coverage = new_coverage
+        selection = self.job_listbox.curselection()
+        if not selection:
+            return
+
+        self.selected_job_index = selection[0]
+        job = self.companies[self.selected_company_index].jobs[self.selected_job_index]
+
+        self.title_entry.delete(0, tk.END)
+        self.title_entry.insert(0, job.title)
+
+        self.status_var.set(job.status)
+
+        self.coverage_entry.delete(0, tk.END)
+        self.coverage_entry.insert(0, str(job.coverage))
+
+
+    def save_job_changes(self):
+        if self.selected_company_index is None or self.selected_job_index is None:
+            messagebox.showwarning("Warning", "Select a job to edit.")
+            return
+
+        title = self.title_entry.get().strip()
+        status = self.status_var.get()
+        coverage_input = self.coverage_entry.get().strip()
+
+        if not title:
+            messagebox.showwarning("Warning", "Title cannot be empty.")
+            return
+
+        if not coverage_input.isdigit():
+            messagebox.showwarning("Warning", "Coverage must be a number.")
+            return
+
+        coverage = int(coverage_input)
+
+        job = self.companies[self.selected_company_index].jobs[self.selected_job_index]
+        job.title = title
+        job.status = status
+        job.coverage = coverage
+
         self.on_edit_callback()
-        messagebox.showinfo("Success", "Job updated successfully.")
-        self.destroy()
+        self.show_jobs()
+        messagebox.showinfo("Success", "Job updated.")
+

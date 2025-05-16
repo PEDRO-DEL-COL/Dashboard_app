@@ -47,7 +47,7 @@
         "jobs": [
             {
                 "title": "PLC Technician",
-                "status": "Open",
+                "status": "open",
                 "coverage": 3,
                 "candidates": [
                     {
