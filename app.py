@@ -13,7 +13,6 @@ from views.edit_job_popup import EditJobPopup
 from views.edit_candidate_popup import EditCandidatePopup
 
 
-
 class App(tk.Tk):
 
     def __init__(self):
@@ -51,7 +50,7 @@ class App(tk.Tk):
         job_frame = tk.Frame(list_frame)
         job_frame.pack(side="left", fill="both", expand=True)
         tk.Label(job_frame, text="Registered Jobs").pack()
-        self.jobListbox = tk.Listbox(job_frame, width=70)
+        self.jobListbox = tk.Listbox(job_frame, width=100)
         self.jobListbox.pack(pady=10)
         job_buttons = tk.Frame(job_frame)
         job_buttons.pack()

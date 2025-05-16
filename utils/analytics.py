@@ -7,6 +7,9 @@ def getCoverageFillStatus(companies):
 
     for company in companies:
         for job in company.jobs:
+            if job.status.lower() != "open":
+                continue
+
             totalCoverage += job.coverage
             for candidate in job.candidates:
                 status = candidate.status.lower()
@@ -14,6 +17,7 @@ def getCoverageFillStatus(companies):
                     totalFilled += 1
 
     return totalCoverage, totalFilled
+
 
 
 def renderFillProgressChart(frame, companies):

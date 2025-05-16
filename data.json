@@ -38,6 +38,30 @@
                 "status": "Open",
                 "coverage": 3,
                 "candidates": []
+            },
+            {
+                "title": "Paralegal - Family/Matrimonial",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            },
+            {
+                "title": "Commercial Litigation Attorney",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            },
+            {
+                "title": "Mental Health and Hygiene Associate Attorney",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            },
+            {
+                "title": "Estate Litigation Associate Attorney ",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
             }
         ]
     },
@@ -75,6 +99,72 @@
         "jobs": [
             {
                 "title": "Business Immigration Analyst",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            }
+        ]
+    },
+    {
+        "name": "Iberia",
+        "companyId": "COMP9502593",
+        "jobs": [
+            {
+                "title": "Sit Down Forklift",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            },
+            {
+                "title": "Picker",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            }
+        ]
+    },
+    {
+        "name": "Trane",
+        "companyId": "COMP3627019",
+        "jobs": [
+            {
+                "title": "Tool & Die Maker",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            }
+        ]
+    },
+    {
+        "name": "Koike",
+        "companyId": "COMP2708970",
+        "jobs": [
+            {
+                "title": "CNC Machinist",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            }
+        ]
+    },
+    {
+        "name": "Webster Bank",
+        "companyId": "COMP8864844",
+        "jobs": [
+            {
+                "title": "Software Cloud Engineer",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            },
+            {
+                "title": "Contract Attorney",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
+            },
+            {
+                "title": "Sr. Analyst, IT Asset and Financial Management Support",
                 "status": "Open",
                 "coverage": 3,
                 "candidates": []
