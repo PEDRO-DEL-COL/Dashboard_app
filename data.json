@@ -25,7 +25,7 @@
                     },
                     {
                         "name": "Crystal Steitz",
-                        "status": "Interview Scheduled"
+                        "status": "Rejected"
                     },
                     {
                         "name": "Mackenzie Warren",
@@ -66,6 +66,18 @@
                         "status": "Offer Accepted"
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "name": "Fragomen",
+        "companyId": "COMP1144647",
+        "jobs": [
+            {
+                "title": "Business Immigration Analyst",
+                "status": "Open",
+                "coverage": 3,
+                "candidates": []
             }
         ]
     }
