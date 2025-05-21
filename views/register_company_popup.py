@@ -22,7 +22,7 @@ class RegisterCompanyPopup(tk.Toplevel):
 
         if name:
             companyId = self.generateUniqueId()
-            company = Company(name="", companyId="")
+            company = Company(name, companyId)
             self.on_register_callback(name, companyId)
             self.destroy()
         else:

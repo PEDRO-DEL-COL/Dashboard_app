@@ -1,5 +1,7 @@
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tkinter as tk
 import matplotlib.pyplot as plt
+from collections import Counter
 
 def getCoverageFillStatus(companies):
     totalCoverage = 0
@@ -32,8 +34,40 @@ def renderFillProgressChart(frame, companies):
         autopct='%1.1f%%',
         startangle=90
     )
-    ax.set_title("Total coverage VS Current coverage")
+    ax.set_title("Coverage %")
 
     canvas = FigureCanvasTkAgg(fig, master=frame)
     canvas.draw()
     canvas.get_tk_widget().pack()
+
+
+def renderCandidateStatusChart(frame, companies):
+    # LIMPA qualquer gráfico anterior
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+    # Calcula dados
+    status_count = {}
+    for company in companies:
+        for job in company.jobs:
+            for candidate in job.candidates:
+                status = candidate.status
+                status_count[status] = status_count.get(status, 0) + 1
+
+    statuses = list(status_count.keys())
+    counts = list(status_count.values())
+
+    # Cria gráfico
+    fig, ax = plt.subplots(figsize=(6, 5))
+    ax.bar(range(len(statuses)), counts, color='skyblue')
+    ax.set_title("Candidates per Status")
+    ax.set_ylabel("Count")
+    ax.set_xlabel("Status")
+    ax.set_xticks(range(len(statuses)))
+    ax.set_xticklabels(statuses, rotation=45, ha='right', fontsize=9)
+
+    fig.tight_layout(pad=1.0)
+
+    canvas = FigureCanvasTkAgg(fig, master=frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
